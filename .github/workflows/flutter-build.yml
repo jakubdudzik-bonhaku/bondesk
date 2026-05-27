@@ -440,7 +440,6 @@ jobs:
 
   build-rustdesk-ios:
     if: false  # BonDesk: only Windows build
-    if: ${{ inputs.upload-artifact }}
     name: build rustdesk ios ipa
     runs-on: ${{ matrix.job.os }}
     needs: [generate-bridge]
@@ -779,13 +778,12 @@ jobs:
             rustdesk*-${{ matrix.job.arch }}.dmg
 
   publish_unsigned:
-    if: false  # BonDesk: only Windows build
     needs:
       - build-for-macOS
       - build-for-windows-flutter
       - build-for-windows-sciter
     runs-on: ubuntu-latest
-    if: ${{ inputs.upload-artifact }}
+    if: false  # BonDesk: only Windows build
     steps:
       - name: Download artifacts
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
@@ -1116,10 +1114,9 @@ jobs:
             signed-apk/rustdesk-${{ env.VERSION }}-${{ matrix.job.arch }}.apk
 
   build-rustdesk-android-universal:
-    if: false  # BonDesk: only Windows build
     needs: [build-rustdesk-android]
     name: build rustdesk android universal apk
-    if: ${{ inputs.upload-artifact }}
+    if: false  # BonDesk: only Windows build
     runs-on: ubuntu-24.04
     env:
       reltype: release
@@ -1640,7 +1637,6 @@ jobs:
 
   build-rustdesk-linux-sciter:
     if: false  # BonDesk: only Windows build
-    if: ${{ inputs.upload-artifact }}
     runs-on: ${{ matrix.job.on }}
     name: build-rustdesk-linux-sciter ${{ matrix.job.target }}
     strategy:
@@ -1867,11 +1863,10 @@ jobs:
           path: rustdesk-${{ env.VERSION }}-${{ matrix.job.arch }}-sciter.deb
 
   build-appimage:
-    if: false  # BonDesk: only Windows build
     name: Build appimage ${{ matrix.job.target }}
     needs: [build-rustdesk-linux]
     runs-on: ubuntu-22.04
-    if: ${{ inputs.upload-artifact }}
+    if: false  # BonDesk: only Windows build
     strategy:
       fail-fast: false
       matrix:
@@ -1918,13 +1913,12 @@ jobs:
             ./appimage/rustdesk-${{ env.VERSION }}-*.AppImage
 
   build-flatpak:
-    if: false  # BonDesk: only Windows build
     name: Build flatpak ${{ matrix.job.target }}${{ matrix.job.suffix }}
     needs:
       - build-rustdesk-linux
       - build-rustdesk-linux-sciter
     runs-on: ${{ matrix.job.on }}
-    if: ${{ inputs.upload-artifact }}
+    if: false  # BonDesk: only Windows build
     strategy:
       fail-fast: false
       matrix:
@@ -2004,7 +1998,6 @@ jobs:
             flatpak/rustdesk-${{ env.VERSION }}-${{ matrix.job.arch }}${{ matrix.job.suffix }}.flatpak
 
   build-rustdesk-web:
-    if: false  # BonDesk: only Windows build
     if: False
     name: build-rustdesk-web
     runs-on: ubuntu-22.04
