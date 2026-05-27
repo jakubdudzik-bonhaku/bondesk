@@ -1,0 +1,20 @@
+name: BonDesk Build (Windows)
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release tag (e.g. bondesk-1.0.0)"
+        type: string
+        default: "bondesk-latest"
+  push:
+    tags:
+      - "bondesk-*"
+
+jobs:
+  build:
+    uses: ./.github/workflows/flutter-build.yml
+    secrets: inherit
+    with:
+      upload-artifact: true
+      upload-tag: ${{ inputs.tag || github.ref_name }}
